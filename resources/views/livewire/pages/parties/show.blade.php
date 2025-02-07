@@ -166,8 +166,8 @@ new class extends Component {
             <div class="relative w-full max-w-2xl p-6 bg-white rounded-lg shadow-lg">
                 <div class="flex items-center space-x-4">
                     <div class="flex-shrink-0">
-                        <x-avatar src="{{ $listeningParty->episode->podcast->artwork_url }}" size="xl"
-                            rounded="sm" alt="Podcast Artwork" />
+                        <x-avatar src="{{ $listeningParty->podcast->artwork_url }}" size="xl" rounded="sm"
+                            alt="Podcast Artwork" />
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-[0.9rem] font-semibold truncate text-slate-900">
@@ -176,7 +176,7 @@ new class extends Component {
                             <p class="max-w-xs text-sm truncate text-slate-600">
                                 {{ $listeningParty->episode->title }}</p>
                             <p class="text-[0.7rem] tracking-tighter uppercase text-slate-400">
-                                {{ $listeningParty->episode->podcast->title }}</p>
+                                {{ $listeningParty->podcast->title }}</p>
                         </div>
                     </div>
                 </div>
@@ -217,13 +217,34 @@ new class extends Component {
             </div>
         </div>
 
-        <div x-show="isLive" x-cloak>
-            <div>{{ $listeningParty->podcast->title }}</div>
-            <div>{{ $listeningParty->episode->title }}</div>
-            <div>Current Time: <span x-text="formatTime(currentTime)" /></div>
-            <div>Start Time: {{ $listeningParty->start_time->toTimeString() }}</div>
-            <div x-show="isLoading">Loading...</div>
-            <x-button x-show="!isReady" @click="joinAndBeReady" class="w-full">Join and Be Ready</x-button>
+        <div x-show="isLive" class="flex items-center justify-center min-h-screen bg-emerald-50" x-cloak>
+            <div class="w-full max-w-2xl p-6 bg-white rounded-lg shadow-lg">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <x-avatar src="{{ $listeningParty->podcast->artwork_url }}" size="xl" rounded="sm"
+                            alt="Podcast Artwork" />
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-lg font-semibold truncate text-slate-900">
+                            {{ $listeningParty->name }}</p>
+                        <p class="max-w-xs text-sm truncate text-slate-600">
+                            {{ $listeningParty->episode->title }}</p>
+                        <p class="text-xs tracking-tighter uppercase text-slate-400">
+                            {{ $listeningParty->podcast->title }}</p>
+                    </div>
+                    <div x-show="!isLoading">
+                        <div class="flex items-center justify-center">
+                            <span class="text-sm text-slate-700" x-text="formatTime(currentTime)"></span>
+                        </div>
+                        <div class="h-2 rounded-lg bg-emerald-100">
+                            <div class="h-2 rounded-lg bg-emerald-500"
+                                :style="`width: ${(currentTime / audio.duration) * 100}%`">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     @endif
 </div>
